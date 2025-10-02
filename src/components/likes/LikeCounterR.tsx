@@ -2,10 +2,13 @@ import '@styles/likeCounter.css';
 import { useCallback, useEffect, useState } from 'react';
 import confetti from 'canvas-confetti';
 import debounce from 'lodash.debounce';
+import { actions } from 'astro:actions';
 
 interface Props {
   postId: string;
 }
+
+//* Así se harían las conexiones con los endpoint de forma tradicional
 
 export const LikeCounterR: React.FC<Props> = ({ postId }) => {
   const [likeCount, setLikeCount] = useState(0);
@@ -32,9 +35,21 @@ export const LikeCounterR: React.FC<Props> = ({ postId }) => {
     }
   }, [likeClicks, saveLikes]);
 
-  const likePost = () => {
+  const likePost = async () => {
     setLikeCount((prev) => prev + 1);
     setLikeClicks((prev) => prev + 1);
+
+    const { data, error } = await actions.getGreeting({
+      age: 39,
+      name: 'Marina',
+      isActive: true,
+    });
+
+    if (error) {
+      return alert('Algo salió mal');
+    }
+
+    console.log({ data });
 
     confetti({
       particleCount: 100,

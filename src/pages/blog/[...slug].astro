@@ -2,8 +2,9 @@
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 
-// import LikeCounter from '@components/likes/LikeCounter.vue';
-import { LikeCounterR } from '@components/likes/LikeCounterR';
+// import { LikeCounterR } from '@components/likes/LikeCounterR';
+import { LikeCounterRAction } from '@components/likes/LikeCounterRAction';
+import LikeCounterAction from '@components/likes/LikeCounterAction.vue';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -20,8 +21,9 @@ const { Content } = await render(post);
 
 <BlogPost {...post.data}>
   <div style={{ height: '50px' }}>
-    <!-- <LikeCounter postId={post.id} client:only="vue" /> -->
-    <LikeCounterR postId={post.id} client:only="react" />
+    <!-- <LikeCounterR postId={post.id} client:only="react" /> -->
+    <LikeCounterRAction postId={post.id} client:only="react" />
+    <!-- <LikeCounterAction postId={post.id} client:only="vue" /> -->
   </div>
   <Content />
 </BlogPost>
